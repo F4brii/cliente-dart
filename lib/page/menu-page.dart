@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'bovines.page.dart';
+import 'new-bovine-page.dart';
+
 class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class MenuWidget extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const <Widget>[
+          children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.black,
@@ -28,11 +31,22 @@ class MenuWidget extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.list_alt_rounded),
               title: Text('Bovinos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BovinesScreen()),
+                );
+              },
             ),
             ListTile(
-              leading: Icon(Icons.create),
-              title: Text('Nuevo Bovino'),
-            ),
+                leading: Icon(Icons.create),
+                title: Text('Nuevo Bovino'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NewBovinesWidget()),
+                  );
+                }),
           ],
         ),
       ),
