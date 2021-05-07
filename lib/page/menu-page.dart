@@ -12,9 +12,31 @@ class MenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Menu'),
+      appBar: AppBar(
+        title: const Text('GanaderiaApp'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white30,
+              ),
+              child: Image(image: AssetImage('toro.png')),
+            ),
+            ListTile(
+              leading: Icon(Icons.list_alt_rounded),
+              title: Text('Bovinos'),
+            ),
+            ListTile(
+              leading: Icon(Icons.create),
+              title: Text('Nuevo Bovino'),
+            ),
+          ],
         ),
-        body: Container());
+      ),
+      backgroundColor: Colors.white,
+    );
   }
 }

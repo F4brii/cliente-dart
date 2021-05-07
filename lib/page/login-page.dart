@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
+import 'menu-page.dart';
+
 const users = const {
   'user1@gmail.com': '12345',
   'user2@gmail.com': 'clave',
@@ -41,7 +43,7 @@ class LoginPage extends StatelessWidget {
       onSignup: _authUser,
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => LoginPage(),
+          builder: (context) => MenuScreen(),
         ));
       },
       onRecoverPassword: _recoverPassword,
