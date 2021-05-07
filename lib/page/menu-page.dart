@@ -13,7 +13,7 @@ class MenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GanaderiaApp'),
+        title: const Text('Ganadero App'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -21,9 +21,9 @@ class MenuWidget extends StatelessWidget {
           children: const <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.white30,
+                color: Colors.black,
               ),
-              child: Image(image: AssetImage('toro.png')),
+              child: Text(""),
             ),
             ListTile(
               leading: Icon(Icons.list_alt_rounded),
@@ -37,6 +37,35 @@ class MenuWidget extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              child: Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage('toro.png'),
+                        fit: BoxFit.contain,
+                        height: 130.0,
+                        width: 130.0,
+                      ),
+                      Text('Ganadero App',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
