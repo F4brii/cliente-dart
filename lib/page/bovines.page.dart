@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 import 'new-bovine-page.dart';
@@ -11,6 +13,8 @@ class BovinesScreen extends StatelessWidget {
 }
 
 class BovinesWidget extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +48,55 @@ class BovinesWidget extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Container(),
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(5.0),
+              margin: const EdgeInsets.all(15.0),
+              child: Text(
+                "Listado de bovinos",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold),
+                textScaleFactor: 0.6,
+              ),
+            ),
+            Container(
+              child: Expanded(
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                          child: Row(
+                            children: [
+                              Container(
+                                  height: 90,
+                                  width: 120,
+                                  margin: const EdgeInsets.all(2.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                  )),
+                              Container(
+                                child: Text("aa"),
+                              )
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(15.0),
+                          margin: const EdgeInsets.all(15.0),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.8),
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container()
+          ],
+        ),
+      ),
     );
   }
 }
