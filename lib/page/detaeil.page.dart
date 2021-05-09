@@ -72,6 +72,11 @@ class DetailScreen extends State<DetailPage> {
                 textScaleFactor: 0.8,
               ),
             ),
+            Expanded(child: Container()),
+            Expanded(child: Container()),
+            Container(
+              height: 100,
+            )
           ],
         ),
       ),
