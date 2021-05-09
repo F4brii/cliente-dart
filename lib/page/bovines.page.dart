@@ -4,6 +4,7 @@ import 'package:dart/models/bovine-model.dart';
 import 'package:dart/services/bovine.services.dart';
 import 'package:flutter/material.dart';
 
+import 'detaeil.page.dart';
 import 'new-bovine-page.dart';
 
 class BovinesScreen extends StatefulWidget {
@@ -88,18 +89,29 @@ class BovinesWidget extends State<BovinesScreen> {
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
                               final datos = snapshot.data;
-                              List<Container> list = [];
+                              List<GestureDetector> list = [];
                               datos.forEach((element) {
-                                list.add(Container(
-                                  padding: new EdgeInsets.all(10.0),
-                                  height: 240,
-                                  child: Card(
-                                    color: Color.fromRGBO(84, 197, 248, 1),
-                                    child: Center(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(element.name),
-                                        ],
+                                list.add(GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailPage(
+                                                bovine: element,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: new EdgeInsets.all(10.0),
+                                    height: 240,
+                                    child: Card(
+                                      color: Color.fromRGBO(84, 197, 248, 1),
+                                      child: Center(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(element.name),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterLogin(
       title: 'Ganadero App',
-      logo: 'assets/fondo.jpeg',
+      logo: 'assets/toro.png',
       onLogin: _authUser,
       onSignup: _authUser,
       onSubmitAnimationCompleted: () {
