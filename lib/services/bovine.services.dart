@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dart/models/bovine-model.dart';
 import 'package:http/http.dart' as http;
 
 class BovineService {
@@ -9,6 +12,15 @@ class BovineService {
     this.url = '/bovines/';
   }
 
-  Future<String> GetListBovines() async =>
-      (await http.get(Uri.http(this.dominio, this.url, {'page': '1'}))).body;
+  Future<List<BovineModel>> GetListBovines() async {
+    List<BovineModel> listado = [];
+    final response = await http.get(Uri.http(this.dominio, this.url));
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      json.forEach((item) => {listado.add(BovineModel.fromJson(item))});
+      return listado;
+    } else {
+      throw Exception('Failed to load Response');
+    }
+  }
 }

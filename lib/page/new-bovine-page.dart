@@ -28,18 +28,24 @@ class NewBovinesWidget extends StatelessWidget {
               child: Text(""),
             ),
             ListTile(
-                leading: Icon(Icons.list_alt_rounded),
-                title: Text('Bovinos'),
+              leading: Icon(Icons.list_alt_rounded),
+              title: Text('Bovinos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BovinesScreen()),
+                );
+              },
+            ),
+            ListTile(
+                leading: Icon(Icons.create),
+                title: Text('Nuevo Bovino'),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => BovinesScreen()),
+                    MaterialPageRoute(builder: (context) => NewBovinesWidget()),
                   );
                 }),
-            ListTile(
-              leading: Icon(Icons.create),
-              title: Text('Nuevo Bovino'),
-            ),
           ],
         ),
       ),

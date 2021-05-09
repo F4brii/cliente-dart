@@ -1,19 +1,27 @@
 import 'dart:html';
 
+import 'package:dart/models/bovine-model.dart';
+import 'package:dart/services/bovine.services.dart';
 import 'package:flutter/material.dart';
 
 import 'new-bovine-page.dart';
 
-class BovinesScreen extends StatelessWidget {
+class BovinesScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "Menu", home: BovinesWidget(), theme: ThemeData.dark());
+  State<StatefulWidget> createState() {
+    return BovinesWidget();
   }
 }
 
-class BovinesWidget extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+class BovinesWidget extends State<BovinesScreen> {
+  final BovineService _service = BovineService();
+  Future<List<BovineModel>> Listado;
+
+  @override
+  void initState() {
+    Listado = _service.GetListBovines();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +42,12 @@ class BovinesWidget extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.list_alt_rounded),
               title: Text('Bovinos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BovinesScreen()),
+                );
+              },
             ),
             ListTile(
                 leading: Icon(Icons.create),
@@ -47,7 +61,7 @@ class BovinesWidget extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white.withOpacity(0.3),
       body: Container(
         child: Column(
           children: [
@@ -64,31 +78,44 @@ class BovinesWidget extends StatelessWidget {
               ),
             ),
             Container(
-              child: Expanded(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Container(
-                          child: Row(
-                            children: [
-                              Container(
-                                  height: 90,
-                                  width: 120,
-                                  margin: const EdgeInsets.all(2.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  )),
-                              Container(
-                                child: Text("aa"),
-                              )
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(15.0),
-                          margin: const EdgeInsets.all(15.0),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.8),
-                          ))
-                    ],
+              child: Container(
+                child: Expanded(
+                  child: Container(
+                    child: Container(
+                      child: FutureBuilder(
+                          future: Listado,
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              final datos = snapshot.data;
+                              List<Container> list = [];
+                              datos.forEach((element) {
+                                list.add(Container(
+                                  padding: new EdgeInsets.all(10.0),
+                                  height: 240,
+                                  child: Card(
+                                    color: Color.fromRGBO(84, 197, 248, 1),
+                                    child: Center(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(element.name),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                              });
+
+                              return ListView(
+                                children: list,
+                              );
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }),
+                    ),
                   ),
                 ),
               ),
