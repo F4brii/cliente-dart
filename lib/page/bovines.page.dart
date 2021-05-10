@@ -89,30 +89,77 @@ class BovinesWidget extends State<BovinesScreen> {
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
                               final datos = snapshot.data;
-                              List<GestureDetector> list = [];
+                              List<Container> list = [];
                               datos.forEach((element) {
-                                list.add(GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DetailPage(
-                                                bovine: element,
+                                list.add(Container(
+                                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                  height: 220,
+                                  child: Card(
+                                    elevation: 5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Expanded(
+                                            child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.all(5),
+                                          child: Image(
+                                            image: NetworkImage(element.image),
+                                          ),
+                                        )),
+                                        Expanded(
+                                            child: Container(
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                  child: Container(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.only(
+                                                          top: 20),
+                                                      child: Text(
+                                                          "Datos del bovino"),
+                                                    ),
+                                                    Expanded(
+                                                        child: Container(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              Text(
+                                                                  "Nombre: ${element.name}")
+                                                            ],
+                                                          ),
+                                                          Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              children: [
+                                                                Text(
+                                                                    "Peso: ${element.weight} Kg")
+                                                              ])
+                                                        ],
+                                                      ),
+                                                    ))
+                                                  ],
+                                                ),
                                               )),
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: new EdgeInsets.all(10.0),
-                                    height: 240,
-                                    child: Card(
-                                      color: Color.fromRGBO(84, 197, 248, 1),
-                                      child: Center(
-                                        child: Column(
-                                          children: <Widget>[
-                                            Text(element.name),
-                                          ],
-                                        ),
-                                      ),
+                                              Expanded(child: Container())
+                                            ],
+                                          ),
+                                        ))
+                                      ],
                                     ),
                                   ),
                                 ));
