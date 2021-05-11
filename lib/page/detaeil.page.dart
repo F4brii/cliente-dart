@@ -1,4 +1,6 @@
 import 'package:dart/models/bovine-model.dart';
+import 'package:dart/models/brand-model.dart';
+import 'package:dart/services/brand.services.dart';
 import 'package:flutter/material.dart';
 
 import 'bovines.page.dart';
@@ -16,8 +18,17 @@ class DetailPage extends StatefulWidget {
 
 class DetailScreen extends State<DetailPage> {
   final BovineModel bovine;
+  final BrandService _service = new BrandService();
+  Future<BrandModel> brand;
 
   DetailScreen({@required this.bovine});
+
+  @override
+  void initState() {
+    brand = _service.GetBrand(bovine.brand);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +83,10 @@ class DetailScreen extends State<DetailPage> {
                 textScaleFactor: 0.8,
               ),
             ),
-            Expanded(child: Container()),
+            Expanded(
+                child: Container(
+              color: Colors.black,
+            )),
             Expanded(child: Container()),
             Container(
               height: 100,
