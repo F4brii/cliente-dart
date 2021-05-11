@@ -86,10 +86,85 @@ class DetailScreen extends State<DetailPage> {
             Expanded(
                 child: Container(
               color: Colors.black,
+              padding: EdgeInsets.all(15),
+              child: Image(
+                image: NetworkImage(bovine.image),
+              ),
             )),
-            Expanded(child: Container()),
+            Expanded(
+                child: Container(
+              child: FutureBuilder(
+                future: brand,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    final datos = snapshot.data;
+                    return Column(
+                      children: [
+                        Expanded(
+                            child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'Fecha: #${bovine.date_birth}',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text('Nombre: ${bovine.name}',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              Text('Peso: ${bovine.weight} Kg',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        )),
+                        Expanded(
+                            child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text('Marca: ${datos.brand}',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              Text('Dueno: ${datos.owner}',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                        ))
+                      ],
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+            )),
             Container(
-              height: 100,
+              height: 200,
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.all(10),
+              child: FloatingActionButton(
+                child: Icon(Icons.arrow_back),
+                elevation: 50.0,
+                backgroundColor: Colors.amber,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             )
           ],
         ),

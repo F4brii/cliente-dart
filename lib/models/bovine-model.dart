@@ -2,7 +2,7 @@ class BovineModel {
   int id;
   String name;
   String weight;
-  DateTime dateBirth;
+  String date_birth;
   String image;
   int brand;
 
@@ -10,7 +10,7 @@ class BovineModel {
       {this.id,
       this.name,
       this.weight,
-      this.dateBirth,
+      this.date_birth,
       this.image,
       this.brand});
 
@@ -19,7 +19,7 @@ class BovineModel {
         id: json['id'],
         name: json['name'],
         weight: json['weight'],
-        dateBirth: json['dateBirth'],
+        date_birth: json['date_birth'],
         image: json['image'],
         brand: json['brand']);
   }
