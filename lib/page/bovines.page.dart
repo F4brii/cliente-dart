@@ -155,7 +155,30 @@ class BovinesWidget extends State<BovinesScreen> {
                                                   ],
                                                 ),
                                               )),
-                                              Expanded(child: Container())
+                                              Container(
+                                                height: 50,
+                                                child: MaterialButton(
+                                                  minWidth: 100.0,
+                                                  height: 25.0,
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DetailPage(
+                                                                bovine: element,
+                                                              )),
+                                                    );
+                                                  },
+                                                  color: Colors.lightBlue,
+                                                  child: Text('Ver Detalle',
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 50,
+                                              )
                                             ],
                                           ),
                                         ))
