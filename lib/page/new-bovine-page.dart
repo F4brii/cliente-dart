@@ -1,10 +1,11 @@
 import 'package:dart/models/brand-model.dart';
+import 'package:dart/services/bovine.services.dart';
 import 'package:dart/services/brand.services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import 'bovines.page.dart';
 
@@ -36,6 +37,7 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
   Future<List<BrandModel>> lista;
 
   DateTime _dateTime;
+  String rutaImagen;
 
   @override
   void initState() {
@@ -191,7 +193,7 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
                   ),
                   RaisedButton(
                     child: Text(
-                      "Pick",
+                      "Fecha",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     onPressed: () {
@@ -203,6 +205,33 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
                           .then((value) => setState(() {
                                 _dateTime = value;
                               }));
+                    },
+                  )
+                ],
+              ),
+            )),
+        formItemsDesign(
+            null,
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  (rutaImagen == null)
+                      ? Text("imagen")
+                      : Image.file(
+                          File(rutaImagen),
+                          width: 50,
+                          height: 50,
+                        ),
+                  RaisedButton(
+                    child: Text("Cargar imagen"),
+                    onPressed: () async {
+                      final ImagePicker _picker = ImagePicker();
+                      PickedFile _pickedFile =
+                          await _picker.getImage(source: ImageSource.gallery);
+                      setState(() {
+                        rutaImagen = _pickedFile.path;
+                      });
                     },
                   )
                 ],
@@ -269,13 +298,24 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
     return null;
   }
 
-  save() {
+  save() async {
     if (llaveForm.currentState.validate()) {
       print("Nombre ${nombreCtrl.text}");
       print("Marca ${this.brand}");
       print("Peso ${pesoCtrl.text}");
       print("fecha ${this._dateTime}");
-      llaveForm.currentState.reset();
+      print("imagen ${this.rutaImagen}");
+
+      BovineService _service = BovineService();
+      bool response = await _service.PostBovine(nombreCtrl.text, pesoCtrl.text,
+          this._dateTime.toString(), this.brand.id, rutaImagen);
+      if (response) {
+      } else {
+        llaveForm.currentState.reset();
+        this._dateTime = null;
+        this.brand = null;
+        this.rutaImagen = null;
+      }
     }
   }
 }
