@@ -1,3 +1,6 @@
+import 'package:dart/models/brand-model.dart';
+import 'package:dart/services/brand.services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +28,19 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
   TextEditingController pesoCtrl = new TextEditingController();
 
   TextEditingController marcaCtrl = new TextEditingController();
+
+  final BrandService _service = BrandService();
+
+  BrandModel brand;
+  Future<List<BrandModel>> lista;
+
+  @override
+  void initState() {
+    lista = _service.GetListBrand();
+    super.initState();
+  }
+
+  _NewBovinesWidgetState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +105,53 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
   Widget formDesign() {
     return Column(
       children: <Widget>[
+        Container(
+          child: FutureBuilder(
+            future: lista,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                print("Trae datos");
+                final datos = snapshot.data;
+                List<BrandModel> a = [];
+                datos.forEach((element) {
+                  a.add(element);
+                });
+
+                if (brand == null) brand = a[0];
+
+                return Container(
+                    child: formItemsDesign(
+                        null,
+                        DropdownButton<BrandModel>(
+                            isExpanded: true,
+                            hint: Text("Select item"),
+                            value: brand,
+                            onChanged: (BrandModel Value) {
+                              setState(() {
+                                brand = Value;
+                              });
+                            },
+                            items: a.map((BrandModel user) {
+                              return DropdownMenuItem<BrandModel>(
+                                value: user,
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      user.brand,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList())));
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+        ),
         formItemsDesign(
             Icons.person,
             TextFormField(

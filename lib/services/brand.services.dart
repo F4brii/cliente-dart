@@ -20,4 +20,16 @@ class BrandService {
       throw Exception('Failed to load Response');
     }
   }
+
+  Future<List<BrandModel>> GetListBrand() async {
+    List<BrandModel> listado = [];
+    final response = await http.get(Uri.http(this.dominio, this.url));
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      json.forEach((item) => {listado.add(BrandModel.fromJson(item))});
+      return listado;
+    } else {
+      throw Exception('Failed to load Response');
+    }
+  }
 }
