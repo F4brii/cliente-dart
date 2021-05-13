@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:io';
 
 import 'bovines.page.dart';
 
@@ -33,6 +34,8 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
 
   BrandModel brand;
   Future<List<BrandModel>> lista;
+
+  DateTime _dateTime;
 
   @override
   void initState() {
@@ -164,15 +167,6 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
         formItemsDesign(
             Icons.person,
             TextFormField(
-              controller: marcaCtrl,
-              decoration: new InputDecoration(
-                labelText: 'Marca',
-              ),
-              validator: validarMarca,
-            )),
-        formItemsDesign(
-            Icons.person,
-            TextFormField(
               keyboardType: TextInputType.number,
               textAlign: TextAlign.left,
               controller: pesoCtrl,
@@ -183,32 +177,37 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
             )),
         formItemsDesign(
             null,
-            Column(children: <Widget>[
-              Text(
-                "Género",
-                textAlign: TextAlign.left,
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    (_dateTime == null
+                        ? "Seleccione una fecha"
+                        : _dateTime.toString()),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  RaisedButton(
+                    child: Text(
+                      "Pick",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2050))
+                          .then((value) => setState(() {
+                                _dateTime = value;
+                              }));
+                    },
+                  )
+                ],
               ),
-              RadioListTile<String>(
-                title: const Text('Macho'),
-                value: 'Macho',
-                groupValue: genero,
-                onChanged: (value) {
-                  setState(() {
-                    genero = value;
-                  });
-                },
-              ),
-              RadioListTile<String>(
-                title: const Text('Hembra'),
-                value: 'Hembra',
-                groupValue: genero,
-                onChanged: (value) {
-                  setState(() {
-                    genero = value;
-                  });
-                },
-              )
-            ])),
+            )),
         GestureDetector(
             onTap: () {
               save();
@@ -273,8 +272,9 @@ class _NewBovinesWidgetState extends State<NewBovinesWidget> {
   save() {
     if (llaveForm.currentState.validate()) {
       print("Nombre ${nombreCtrl.text}");
-      print("Marca ${marcaCtrl.text}");
+      print("Marca ${this.brand}");
       print("Peso ${pesoCtrl.text}");
+      print("fecha ${this._dateTime}");
       llaveForm.currentState.reset();
     }
   }
